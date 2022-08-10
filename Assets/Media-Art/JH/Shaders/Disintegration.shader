@@ -24,6 +24,8 @@ Shader "Disintegration"{
 
     }
 
+    // geometry shader logic written global to access in forward lit pass & shadow caster
+    // depth pass WIP
     HLSLINCLUDE
 
     #include "UnityCG.cginc"
@@ -259,7 +261,8 @@ Shader "Disintegration"{
             #pragma multi_compile_shadowcaster
 
             float4 frag(g2f i) : SV_Target{
-                float dissolve = tex2D(_DissolveTexture, i.uv).r;
+                float2 dissolveUV = i.uv.xy * _DissolveTexture_ST.xy + _DissolveTexture_ST.zw;
+                float dissolve = tex2D(_DissolveTexture, dissolveUV).r;
 
                 if(i.color.w == 0){
                     clip(dissolve - 2 * _Weight);
