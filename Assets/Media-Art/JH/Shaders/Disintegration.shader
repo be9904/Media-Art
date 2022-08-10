@@ -237,7 +237,7 @@ Shader "Disintegration"{
                         col +=  _DissolveColor * _Glow * step( dissolve - 2 * _Weight, _DissolveBorder);
                     }
                 }else{
-                    float s = tex2D(_Shape, i.uv).r;
+                    float s = tex2D(_Shape, dissolveUV).r;
                     if(s < .5) {
                         discard;
                     }
@@ -267,7 +267,7 @@ Shader "Disintegration"{
                 if(i.color.w == 0){
                     clip(dissolve - 2 * _Weight);
                 }else{
-                    float s = tex2D(_Shape, i.uv).r;
+                    float s = tex2D(_Shape, dissolveUV).r;
                     if(s < .5) {
                         discard;
                     }
