@@ -40,13 +40,13 @@ Material:
     m_Floats:
     - _DissolveBorder: 0.05
     - _Exapnd: -0.1
-    - _Glow: 1
+    - _Glow: 2
     - _R: 0.01
     - _Weight: 0
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 0.888, g: 0.7392, b: 0.83040005, a: 1}
-    - _Direction: {r: 0, g: 0, b: 0, a: 0}
-    - _DisintegrationColor: {r: 1, g: 1, b: 1, a: 1}
-    - _DissolveColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Direction: {r: 0.1, g: 0.05, b: 0.01, a: 0}
+    - _DisintegrationColor: {r: 2, g: 2, b: 2, a: 1}
+    - _DissolveColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

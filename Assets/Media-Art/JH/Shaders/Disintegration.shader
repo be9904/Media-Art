@@ -53,7 +53,7 @@ Shader "Disintegration"{
     sampler2D _Shape;
     float _R;
 
-    struct appdata{
+    struct Attributes{
         float4 vertex : POSITION;
         float3 normal : NORMAL;
         float2 uv : TEXCOORD0;
@@ -69,12 +69,12 @@ Shader "Disintegration"{
     struct g2f{
         float4 worldPos : SV_POSITION;
         float2 uv : TEXCOORD0;
-        fixed4 color : COLOR;
+        float4 color : COLOR;
         float3 normal : NORMAL;
     };
 
 
-    v2g vert (appdata v){
+    v2g vert (Attributes v){
         v2g o;
         o.objPos = v.vertex;
         o.uv = v.uv;
@@ -173,7 +173,7 @@ Shader "Disintegration"{
             g2f o;
             o.worldPos = UnityObjectToClipPos(IN[j].objPos);
             o.uv = TRANSFORM_TEX(IN[j].uv, _MainTex);
-            o.color = fixed4(0, 0, 0, 0);
+            o.color = float4(0, 0, 0, 0);
             o.normal = IN[j].normal;
             triStream.Append(o); 
         }
@@ -200,23 +200,26 @@ Shader "Disintegration"{
             #pragma fragment frag
             #pragma geometry geom
             #pragma multi_compile_fwdbase
-           
+            
+            float4 frag (g2f i) : SV_Target{
+                // sample main tex
+                float4 col = tex2D(_MainTex, i.uv) * _Color;
 
-            fixed4 frag (g2f i) : SV_Target{
-                fixed4 col = tex2D(_MainTex, i.uv) * _Color;
-                
+                // calculate normals
                 float3 normal = normalize(i.normal);
+                // sample normal map
                 /*half3 tnormal = UnpackNormal(tex2D(_BumpMap, i.uv));
                 tnormal.xy *= _BumpStr;
                 tnormal = normalize(tnormal);*/
 
+                // lighting
                 float NdotL = dot(_WorldSpaceLightPos0, normal);
                 float4 light = NdotL * _LightColor0;
                 col *= (_AmbientColor + light);
-               
+
+                // add emission
                 float brightness = i.color.w  * _Glow;
                 col = lerp(col, _DisintegrationColor,  i.color.x);
-                
                 if(brightness > 0){
                     col *= brightness + _Weight;
                 }
