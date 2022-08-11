@@ -31,7 +31,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: FlyingParticles
+  m_Name: FlyingParticles.004
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
@@ -104,7 +104,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FlyingParticles
+  m_Name: FlyingParticles.004
   m_Graph: {fileID: 114350483966674976}
   m_Infos:
     m_RendererSettings:
@@ -2336,7 +2336,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614786}
   - {fileID: 8926484042661614787}
   - {fileID: 8926484042661614788}
-  Asset: {fileID: -3256353808211938606, guid: ebaa71b41285e7143b646c1c85ff01cc, type: 3}
+  Asset: {fileID: -3256353808211938606, guid: 33375acab662a0b40bef7a79c9be2941, type: 3}
 --- !u!114 &8926484042661614786
 MonoBehaviour:
   m_ObjectHideFlags: 0
