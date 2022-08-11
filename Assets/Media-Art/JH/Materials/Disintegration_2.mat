@@ -41,7 +41,7 @@ Material:
     - _DissolveBorder: 0.05
     - _Exapnd: -0.1
     - _Glow: 2
-    - _R: 0.01
+    - _R: 0.007
     - _Weight: 0
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 1}
