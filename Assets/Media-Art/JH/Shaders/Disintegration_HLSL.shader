@@ -53,7 +53,7 @@ Shader "Disintegration_HLSL"{
     sampler2D _Shape;
     float _R;
 
-    struct Attributes{
+    struct GeomAttributes{
         float4 vertex : POSITION;
         float3 normal : NORMAL;
         float2 uv : TEXCOORD0;
@@ -81,7 +81,7 @@ Shader "Disintegration_HLSL"{
     };
 
 
-    v2g vert (Attributes v){
+    v2g vert (GeomAttributes v){
         v2g o = (v2g)0;
         UNITY_SETUP_INSTANCE_ID(v);
         UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
@@ -207,12 +207,12 @@ Shader "Disintegration_HLSL"{
 
     SubShader{
 
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque" "RenderPipeline" = "UniversalPipeline"}
         LOD 100
         Cull Off
 
         Pass{
-
+            Name "ForwardLit"
             Tags { 
                 "LightMode" = "UniversalForward"
             }
@@ -290,6 +290,7 @@ Shader "Disintegration_HLSL"{
         }
 
         Pass{
+            Name "ShadowCaster"
             Tags{
                 "LightMode" = "ShadowCaster"
             }
