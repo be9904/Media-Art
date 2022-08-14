@@ -3,13 +3,12 @@ Shader "Disintegration_HLSL"{
     Properties{
         _MainTex ("Texture", 2D) = "white" {}
         _Color("Color", Color) = (1, 1, 1, 1)
-        [HDR]_AmbientColor("Ambient Color", Color) = (0, 0, 0, 1)
         _Metallic("Metallic", Range(0, 1)) = 0
         _Roughness("Roughness", Range(0, 1)) = 0
  
         _FlowMap("Flow (RG)", 2D) = "black" {}
         _DissolveTexture("Dissolve Texutre", 2D) = "white" {}
-        _DissolveColor("Dissolve Color Border", Color) = (1, 1, 1, 1) 
+        [HDR]_DissolveColor("Dissolve Color Border", Color) = (1, 1, 1, 1) 
         _DissolveBorder("Dissolve Border", float) =  0.05
 
 
@@ -35,7 +34,6 @@ Shader "Disintegration_HLSL"{
     sampler2D _MainTex;
     float4 _MainTex_ST;
     float4 _Color;
-    float4 _AmbientColor;
     float _Metallic;
     float _Roughness;
 
@@ -59,6 +57,7 @@ Shader "Disintegration_HLSL"{
         float4 vertex : POSITION;
         float3 normal : NORMAL;
         float2 uv : TEXCOORD0;
+        UNITY_VERTEX_INPUT_INSTANCE_ID
     };
 
     struct v2g{
@@ -67,6 +66,8 @@ Shader "Disintegration_HLSL"{
         float3 normal : NORMAL;
         float3 worldPos : TEXCOORD1;
         float3 viewDir : TEXCOORD3;
+        UNITY_VERTEX_INPUT_INSTANCE_ID
+        UNITY_VERTEX_OUTPUT_STEREO
     };
 
     struct g2f{
@@ -75,11 +76,16 @@ Shader "Disintegration_HLSL"{
         float4 color : COLOR;
         float3 normal : NORMAL;
         float3 viewDir : TEXCOORD3;
+        UNITY_VERTEX_INPUT_INSTANCE_ID
+        UNITY_VERTEX_OUTPUT_STEREO
     };
 
 
     v2g vert (Attributes v){
-        v2g o;
+        v2g o = (v2g)0;
+        UNITY_SETUP_INSTANCE_ID(v);
+        UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+        
         o.objPos = v.vertex;
         o.uv = v.uv;
         o.normal = TransformObjectToWorldNormal(v.normal);
@@ -216,24 +222,22 @@ Shader "Disintegration_HLSL"{
             #pragma fragment frag
             #pragma geometry geom
             #pragma multi_compile_fwdbase
+            #pragma multi_compile _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             
             float4 frag (g2f i) : SV_Target{
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+                
                 // sample main tex
                 float4 col = tex2D(_MainTex, i.uv) * _Color;
 
                 // calculate normals
                 float3 normal = normalize(i.normal);
 
-                // Get BRDF
-		        BRDFData brdfData;
-		        InitializeBRDFData(col.rgb, _Metallic, 0.5, 1-_Roughness, col.a, brdfData);
-
                 // lighting
-                float NdotL = dot(_MainLightPosition.xyz, normal);
+                float NdotL = saturate(dot(_MainLightPosition.xyz, normal));
                 float4 light = NdotL * _MainLightColor;
-                half3 reflectVector = reflect(-i.viewDir, normal);
-                half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, brdfData.perceptualRoughness, 1);
-                col *= (_AmbientColor + light);
+                col *= light;
 
                 // add emission
                 float brightness = i.color.w  * _Glow;
@@ -259,10 +263,26 @@ Shader "Disintegration_HLSL"{
                     }
                 }
 
+                 // Get BRDF
+		        BRDFData brdfData;
+		        InitializeBRDFData(col.rgb, _Metallic, 0.5, 1-_Roughness, col.a, brdfData);
+                half3 reflectVector = reflect(-i.viewDir, normal);
+                half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, brdfData.perceptualRoughness, 1);
+
                 float3 GI = EnvironmentBRDF(brdfData, col, indirectSpecular, 0);
                 float3 pbr = LightingPhysicallyBased(brdfData, GetMainLight(), normal, i.viewDir);
 
                 pbr.rgb += GI;
+
+                #ifdef _ADDITIONAL_LIGHTS
+			        uint pixelLightCount = GetAdditionalLightsCount();
+			        for(uint lightIndex = 0u; lightIndex < pixelLightCount; ++lightIndex){
+					        Light addLight = GetAdditionalLight(lightIndex, i.worldPos);
+					        float3 addLightResult = 
+						        LightingPhysicallyBased(brdfData, addLight, normal, i.viewDir);
+					        pbr.rgb += addLightResult;
+			        }
+		        #endif
                 
                 return float4(pbr, 1);
             }
@@ -282,6 +302,8 @@ Shader "Disintegration_HLSL"{
             #pragma multi_compile_shadowcaster
 
             float4 frag(g2f i) : SV_Target{
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+                
                 float2 dissolveUV = i.uv.xy * _DissolveTexture_ST.xy + _DissolveTexture_ST.zw;
                 float dissolve = tex2D(_DissolveTexture, dissolveUV).r;
 
@@ -293,6 +315,8 @@ Shader "Disintegration_HLSL"{
                         discard;
                     }
                 }
+
+                return 0;
             }
 
             ENDHLSL
