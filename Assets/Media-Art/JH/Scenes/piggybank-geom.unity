@@ -1491,6 +1491,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Origin
       objectReference: {fileID: 0}
+    - target: {fileID: 9137506638303290242, guid: 001938f2c32f1c745b1088cfcd87edd5,
+        type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9137506638038465996, guid: 001938f2c32f1c745b1088cfcd87edd5, type: 3}
     - {fileID: 9137506637460095662, guid: 001938f2c32f1c745b1088cfcd87edd5, type: 3}
