@@ -57,7 +57,7 @@ Shader "Disintegration_HLSL"{
         float4 vertex : POSITION;
         float3 normal : NORMAL;
         float2 uv : TEXCOORD0;
-        UNITY_VERTEX_INPUT_INSTANCE_ID
+        // UNITY_VERTEX_INPUT_INSTANCE_ID
     };
 
     struct v2g{
@@ -66,8 +66,8 @@ Shader "Disintegration_HLSL"{
         float3 normal : NORMAL;
         float3 worldPos : TEXCOORD1;
         float3 viewDir : TEXCOORD3;
-        UNITY_VERTEX_INPUT_INSTANCE_ID
-        UNITY_VERTEX_OUTPUT_STEREO
+        // UNITY_VERTEX_INPUT_INSTANCE_ID
+        // UNITY_VERTEX_OUTPUT_STEREO
     };
 
     struct g2f{
@@ -76,15 +76,15 @@ Shader "Disintegration_HLSL"{
         float4 color : COLOR;
         float3 normal : NORMAL;
         float3 viewDir : TEXCOORD3;
-        UNITY_VERTEX_INPUT_INSTANCE_ID
-        UNITY_VERTEX_OUTPUT_STEREO
+        // UNITY_VERTEX_INPUT_INSTANCE_ID
+        // UNITY_VERTEX_OUTPUT_STEREO
     };
 
 
     v2g vert (GeomAttributes v){
         v2g o = (v2g)0;
-        UNITY_SETUP_INSTANCE_ID(v);
-        UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+        // UNITY_SETUP_INSTANCE_ID(v);
+        // UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
         
         o.objPos = v.vertex;
         o.uv = v.uv;
@@ -123,7 +123,6 @@ Shader "Disintegration_HLSL"{
     
     [maxvertexcount(7)]
     void geom(triangle v2g IN[3], inout TriangleStream<g2f> triStream){
-
         float2 avgUV = (IN[0].uv + IN[1].uv + IN[2].uv) / 3;
         float3 avgPos = (IN[0].objPos + IN[1].objPos + IN[2].objPos) / 3;
         float3 avgNormal = (IN[0].normal + IN[1].normal + IN[2].normal) / 3;
@@ -226,7 +225,7 @@ Shader "Disintegration_HLSL"{
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             
             float4 frag (g2f i) : SV_Target{
-                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+                // UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 
                 // sample main tex
                 float4 col = tex2D(_MainTex, i.uv) * _Color;
@@ -303,7 +302,7 @@ Shader "Disintegration_HLSL"{
             #pragma multi_compile_shadowcaster
 
             float4 frag(g2f i) : SV_Target{
-                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+                // UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 
                 float2 dissolveUV = i.uv.xy * _DissolveTexture_ST.xy + _DissolveTexture_ST.zw;
                 float dissolve = tex2D(_DissolveTexture, dissolveUV).r;
