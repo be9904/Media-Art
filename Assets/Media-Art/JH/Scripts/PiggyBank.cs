@@ -18,15 +18,9 @@ public class PiggyBank : MonoBehaviour
         _grabbable = GetComponent<BNG.Grabbable>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("HammerEnd"))
-            Debug.Log("Hit by Hammer");
+        if(collision.gameObject.CompareTag("Hammer"))
+            Debug.Log(collision.gameObject.name);
     }
 }
