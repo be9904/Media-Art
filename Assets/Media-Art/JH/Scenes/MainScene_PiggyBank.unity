@@ -838,6 +838,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinCapacity: 0
+  emptyAnimation: {fileID: 5545540724215391309}
+  fullAnimation: {fileID: 5545540725187974880}
 --- !u!1 &575551631
 GameObject:
   m_ObjectHideFlags: 0
