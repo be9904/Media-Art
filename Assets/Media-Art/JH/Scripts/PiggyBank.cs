@@ -27,8 +27,10 @@ public class PiggyBank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Hammer"))
         {
-            Debug.Log(collision.gameObject.name);
-            PlayAnimation(0);
+            if(CoinCapacity < 20)
+                PlayAnimation(0);
+            else if(CoinCapacity >= 20)
+                PlayAnimation(1);
         }
     }
     
