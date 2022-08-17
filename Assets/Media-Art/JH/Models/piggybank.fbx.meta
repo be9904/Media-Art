@@ -3,7 +3,17 @@ guid: 281c56c989ce7d2489a35d054af188f3
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyes
+    second: {fileID: 2100000, guid: 502cf38c9dfa776468a75f0800900913, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pigskin
+    second: {fileID: 2100000, guid: c1ea0cf3625b158408f9042f6d7d7e7e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -76,6 +86,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips:
+  - 4ad72ef57ef567a4db3343babb822c12
   - 204e175ed3a63ca4fb42766aa92e8857
   importAnimation: 1
   humanDescription:
