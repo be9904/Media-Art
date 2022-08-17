@@ -490,7 +490,6 @@ GameObject:
   - component: {fileID: 439549760}
   - component: {fileID: 439549759}
   - component: {fileID: 439549758}
-  - component: {fileID: 439549757}
   - component: {fileID: 439549756}
   - component: {fileID: 439549766}
   m_Layer: 10
@@ -523,23 +522,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 0}
   m_Enabled: 1
---- !u!114 &439549757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439549755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c575c9380b9d239499fadf100ef2800b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionAudio: {fileID: 8300000, guid: 139ef2d853962e14f836c51a778b76f5, type: 3}
-  MinimumVolume: 0.25
-  MaximumVolume: 1
-  RecentlyPlayedSound: 0
-  LastRelativeVelocity: 0
 --- !u!114 &439549758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,6 +822,8 @@ MonoBehaviour:
   CoinCapacity: 0
   emptyAnimation: {fileID: 5545540724215391309}
   fullAnimation: {fileID: 5545540725187974880}
+  breakEffect: {fileID: 8300000, guid: 47203a2443b82a34eb46c137941d5de1, type: 3}
+  isHit: 0
 --- !u!1 &575551631
 GameObject:
   m_ObjectHideFlags: 0
