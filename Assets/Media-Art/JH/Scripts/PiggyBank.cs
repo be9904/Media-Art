@@ -11,6 +11,7 @@ public class PiggyBank : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;
     private Grabbable _grabbable;
+    private BoxCollider _collider;
 
     public GameObject emptyAnimation;
     public GameObject fullAnimation;
@@ -19,6 +20,10 @@ public class PiggyBank : MonoBehaviour
     private AudioSource _audioSource;
     private AudioClip _originalSfx;
     public bool isHit = false;
+    
+    // Materials
+    public Material skinMat;
+    public Material eyesMat;
     
     // Start is called before the first frame update
     void Start()
@@ -29,6 +34,7 @@ public class PiggyBank : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _grabbable = GetComponent<BNG.Grabbable>();
         _meshRenderer = GetComponent<MeshRenderer>();
+        _collider = GetComponent<BoxCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -41,7 +47,7 @@ public class PiggyBank : MonoBehaviour
                 PlayAnimation(1);
         }
     }
-    
+
     void PlayAnimation(int id)
     {
         isHit = true;
@@ -57,15 +63,45 @@ public class PiggyBank : MonoBehaviour
         else if (id == 1) // full
             fullAnimation.SetActive(true);
 
+        _collider.enabled = false;
+
         StartCoroutine(ResetAudioClip());
     }
 
     IEnumerator ResetAudioClip()
     {
-        yield return new WaitForSeconds(breakEffect.length + 2);
+        yield return new WaitForSeconds(10f);
+        
+        _meshRenderer.enabled = true;
+        
+        float val = 1f;
+        skinMat.SetFloat("_Weight", val);
+        eyesMat.SetFloat("_Weight", val);
+        skinMat.SetFloat("_Expand", 1f);
+        eyesMat.SetFloat("_Expand", 1f);
 
+        while (val > 0)
+        {
+            val -= .01f;
+            skinMat.SetFloat("_Weight", val);
+            eyesMat.SetFloat("_Weight", val);
+
+            yield return null;
+        }
+        
+        skinMat.SetFloat("_Expand", 0.2f);
+        eyesMat.SetFloat("_Expand", 0.2f);
+        
         _audioSource.clip = _originalSfx;
-        _rigidbody.isKinematic = false;
+        
         isHit = false;
+        
+        _rigidbody.isKinematic = false;
+        _collider.enabled = true;
+
+        for (int i = 2 ; i < gameObject.transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 }

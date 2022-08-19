@@ -553,7 +553,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 139ef2d853962e14f836c51a778b76f5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -824,6 +824,8 @@ MonoBehaviour:
   fullAnimation: {fileID: 5545540725187974880}
   breakEffect: {fileID: 8300000, guid: 47203a2443b82a34eb46c137941d5de1, type: 3}
   isHit: 0
+  skinMat: {fileID: 2100000, guid: a06fde487194be147b0162c5ceb5fb6f, type: 2}
+  eyesMat: {fileID: 2100000, guid: 52165f90599d2de4bbde2aff56944c03, type: 2}
 --- !u!1 &575551631
 GameObject:
   m_ObjectHideFlags: 0
