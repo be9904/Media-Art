@@ -16,16 +16,16 @@ public class Hammer : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         PiggyBank pb = FindObjectOfType<PiggyBank>();
-        if (collision.gameObject.CompareTag("PiggyBank") && !pb.isHit && _grabbable.BeingHeld)
+        if (other.gameObject.CompareTag("PiggyBank") && !pb.isHit && _grabbable.BeingHeld)
         {
             if (_rigidbody.velocity.sqrMagnitude > minHitPower)
             {
-                if(pb.CoinCapacity < 20)
+                if(pb.CoinCapacity < pb.MaxCoinCapacity)
                     pb.PlayAnimation(0);
-                else if(pb.CoinCapacity >= 20)
+                else if(pb.CoinCapacity >= pb.MaxCoinCapacity)
                     pb.PlayAnimation(1);
             }
         }

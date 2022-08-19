@@ -45,7 +45,7 @@ Material:
     - _Metallic: 0
     - _R: 0.005
     - _Roughness: 0
-    - _Weight: -0.009999329
+    - _Weight: 0
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 0.7254902, g: 0.6039216, b: 0.6784314, a: 1}
