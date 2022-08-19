@@ -9,6 +9,7 @@ public class PiggyBank : MonoBehaviour
     public int CoinCapacity;
     public int MaxCoinCapacity;
     public float shakeThreshold;
+    private bool isFull;
 
     private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;
@@ -97,6 +98,7 @@ public class PiggyBank : MonoBehaviour
                     SfxAudioSource.loop = true;
                     SfxAudioSource.Play();
                     currentTrack = 3;
+                    isFull = true;
                 }
             }
             else
@@ -134,7 +136,10 @@ public class PiggyBank : MonoBehaviour
 
     IEnumerator Reset()
     {
-        yield return new WaitForSeconds(10f);
+        if(isFull)
+            yield return new WaitForSeconds(20f);
+        else
+            yield return new WaitForSeconds(10f);
         
         _meshRenderer.enabled = true;
         
@@ -174,6 +179,7 @@ public class PiggyBank : MonoBehaviour
         currentTrack = 0;
         SfxAudioSource.clip = SfxAudioClips[0];
         SfxAudioSource.Play();
+        isFull = false;
     }
 
     private void OnApplicationQuit()
