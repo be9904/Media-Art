@@ -65,10 +65,10 @@ public class PiggyBank : MonoBehaviour
 
         _collider.enabled = false;
 
-        StartCoroutine(ResetAudioClip());
+        StartCoroutine(Reset());
     }
 
-    IEnumerator ResetAudioClip()
+    IEnumerator Reset()
     {
         yield return new WaitForSeconds(10f);
         
