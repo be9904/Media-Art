@@ -7,6 +7,7 @@ using UnityEngine;
 public class PiggyBank : MonoBehaviour
 {
     public int CoinCapacity;
+    public float shakeThreshold;
 
     private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;
@@ -37,18 +38,17 @@ public class PiggyBank : MonoBehaviour
         _collider = GetComponent<BoxCollider>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Update()
     {
-        if (collision.gameObject.CompareTag("Hammer") && !isHit)
+        if (_rigidbody.velocity.sqrMagnitude > shakeThreshold && _grabbable.BeingHeld)
         {
-            if(CoinCapacity < 20)
-                PlayAnimation(0);
-            else if(CoinCapacity >= 20)
-                PlayAnimation(1);
+            Debug.Log("Shake Detected");
         }
     }
 
-    void PlayAnimation(int id)
+    
+
+    public void PlayAnimation(int id)
     {
         isHit = true;
         
