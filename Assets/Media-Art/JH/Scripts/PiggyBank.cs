@@ -25,6 +25,8 @@ public class PiggyBank : MonoBehaviour
     // Materials
     public Material skinMat;
     public Material eyesMat;
+
+    private float timer = 0f;
     
     // Start is called before the first frame update
     void Start()
@@ -42,7 +44,8 @@ public class PiggyBank : MonoBehaviour
     {
         if (_rigidbody.velocity.sqrMagnitude > shakeThreshold && _grabbable.BeingHeld)
         {
-            Debug.Log("Shake Detected");
+            timer += Time.deltaTime;
+            CoinCapacity = (int)(timer * 0.75f);
         }
     }
 

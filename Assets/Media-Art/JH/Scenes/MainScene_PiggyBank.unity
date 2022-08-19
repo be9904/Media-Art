@@ -485,13 +485,13 @@ GameObject:
   - component: {fileID: 439549765}
   - component: {fileID: 439549764}
   - component: {fileID: 439549763}
+  - component: {fileID: 439549766}
   - component: {fileID: 439549762}
   - component: {fileID: 439549761}
   - component: {fileID: 439549760}
   - component: {fileID: 439549759}
   - component: {fileID: 439549758}
   - component: {fileID: 439549756}
-  - component: {fileID: 439549766}
   m_Layer: 10
   m_Name: PiggyBank
   m_TagString: PiggyBank
