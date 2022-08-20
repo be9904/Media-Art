@@ -7,19 +7,40 @@ using UnityEngine;
 public class PiggyBank : MonoBehaviour
 {
     public int CoinCapacity;
+    public int MaxCoinCapacity;
+    public float shakeThreshold;
+    private bool isFull;
 
     private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;
     private Grabbable _grabbable;
+    private BoxCollider _boxCollider;
+    private MeshCollider _meshCollider;
 
     public GameObject emptyAnimation;
     public GameObject fullAnimation;
     public AudioClip breakEffect;
+    private GameObject[] _coins;
 
+    public AudioSource SfxAudioSource;
+    public List<AudioClip> SfxAudioClips;
     private AudioSource _audioSource;
     private AudioClip _originalSfx;
+    private int currentTrack;
     public bool isHit = false;
     
+    // Materials
+    public Material skinMat;
+    public Material eyesMat;
+
+    private float timer = 0f;
+    BNG.InputBridge input;
+
+    private void Awake()
+    {
+        input = BNG.InputBridge.Instance;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,20 +50,74 @@ public class PiggyBank : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _grabbable = GetComponent<BNG.Grabbable>();
         _meshRenderer = GetComponent<MeshRenderer>();
+        _boxCollider = GetComponent<BoxCollider>();
+        _meshCollider = GetComponent<MeshCollider>();
+
+        for (int i = 0; i < 22; i++)
+            _coins[i] = fullAnimation.transform.GetChild(i).gameObject;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Update() => Shake();
+
+    void Shake()
     {
-        if (collision.gameObject.CompareTag("Hammer") && !isHit)
+        if (_rigidbody.velocity.sqrMagnitude > shakeThreshold && _grabbable.BeingHeld)
         {
-            if(CoinCapacity < 20)
-                PlayAnimation(0);
-            else if(CoinCapacity >= 20)
-                PlayAnimation(1);
+            timer += Time.deltaTime;
+            CoinCapacity = (int)(timer * 0.75f);
+
+            SfxAudioSource.volume = 1;
+
+            if (CoinCapacity > MaxCoinCapacity * 0.35f && CoinCapacity <= MaxCoinCapacity * 0.7f)
+            {
+                input.VibrateController(.3f, .2f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .2f, .1f, BNG.ControllerHand.Right);
+                if (currentTrack != 1)
+                {
+                    SfxAudioSource.clip = SfxAudioClips[1];
+                    SfxAudioSource.loop = true;
+                    SfxAudioSource.Play();
+                    currentTrack = 1;
+                }
+            }
+            else if (CoinCapacity > MaxCoinCapacity * 0.7f && CoinCapacity <= MaxCoinCapacity * 0.9f)
+            {
+                input.VibrateController(.3f, .3f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .3f, .1f, BNG.ControllerHand.Right);
+                if (currentTrack != 2)
+                {
+                    SfxAudioSource.clip = SfxAudioClips[2];
+                    SfxAudioSource.loop = true;
+                    SfxAudioSource.Play();
+                    currentTrack = 2;
+                }
+            }
+            else if (CoinCapacity > MaxCoinCapacity * 0.9f)
+            {
+                input.VibrateController(.3f, .4f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .4f, .1f, BNG.ControllerHand.Right);
+                if (currentTrack != 3)
+                {
+                    SfxAudioSource.clip = SfxAudioClips[3];
+                    SfxAudioSource.loop = true;
+                    SfxAudioSource.Play();
+                    currentTrack = 3;
+                    isFull = true;
+                }
+            }
+            else
+            {
+                input.VibrateController(.3f, .1f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .1f, .1f, BNG.ControllerHand.Right);
+            }
         }
+        else if (_rigidbody.velocity.sqrMagnitude > 0 && _grabbable.BeingHeld)
+            SfxAudioSource.volume = _rigidbody.velocity.sqrMagnitude / shakeThreshold;
+        else
+            SfxAudioSource.volume = 0;
     }
-    
-    void PlayAnimation(int id)
+
+    public void PlayAnimation(int id)
     {
         isHit = true;
         
@@ -57,15 +132,63 @@ public class PiggyBank : MonoBehaviour
         else if (id == 1) // full
             fullAnimation.SetActive(true);
 
-        StartCoroutine(ResetAudioClip());
+        _boxCollider.enabled = false;
+        _meshCollider.enabled = false;
+
+        StartCoroutine(Reset());
     }
 
-    IEnumerator ResetAudioClip()
+    IEnumerator Reset()
     {
-        yield return new WaitForSeconds(breakEffect.length + 2);
+        if(isFull)
+            yield return new WaitForSeconds(20f);
+        else
+            yield return new WaitForSeconds(10f);
+        
+        _meshRenderer.enabled = true;
+        
+        float val = 1f;
+        skinMat.SetFloat("_Weight", val);
+        eyesMat.SetFloat("_Weight", val);
+        skinMat.SetFloat("_Expand", 1f);
+        eyesMat.SetFloat("_Expand", 1f);
 
+        while (val > 0)
+        {
+            val -= .01f;
+            skinMat.SetFloat("_Weight", val);
+            eyesMat.SetFloat("_Weight", val);
+
+            yield return null;
+        }
+        
+        skinMat.SetFloat("_Expand", 0.2f);
+        eyesMat.SetFloat("_Expand", 0.2f);
+        
         _audioSource.clip = _originalSfx;
-        _rigidbody.isKinematic = false;
+        
         isHit = false;
+        
+        _rigidbody.isKinematic = false;
+        _boxCollider.enabled = true;
+        _meshCollider.enabled = true;
+
+        for (int i = 2 ; i < gameObject.transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        timer = 0f;
+        CoinCapacity = 0;
+        currentTrack = 0;
+        SfxAudioSource.clip = SfxAudioClips[0];
+        SfxAudioSource.Play();
+        isFull = false;
+    }
+
+    private void OnApplicationQuit()
+    {
+        skinMat.SetFloat("_Weight", 0);
+        eyesMat.SetFloat("_Weight", 0);
     }
 }

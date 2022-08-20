@@ -40,7 +40,7 @@ Material:
     m_Floats:
     - _DissolveBorder: 0.01
     - _Exapnd: 1
-    - _Expand: 0.1
+    - _Expand: 0.2
     - _Glow: 0
     - _Metallic: 0
     - _R: 0.005
