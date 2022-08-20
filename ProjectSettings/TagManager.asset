@@ -37,8 +37,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - StencilLayer1
+  - StencilLayer2
   m_SortingLayers:
   - name: Default
     uniqueID: 0

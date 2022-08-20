@@ -20,6 +20,7 @@ public class PiggyBank : MonoBehaviour
     public GameObject emptyAnimation;
     public GameObject fullAnimation;
     public AudioClip breakEffect;
+    private GameObject[] _coins;
 
     public AudioSource SfxAudioSource;
     public List<AudioClip> SfxAudioClips;
@@ -51,6 +52,9 @@ public class PiggyBank : MonoBehaviour
         _meshRenderer = GetComponent<MeshRenderer>();
         _boxCollider = GetComponent<BoxCollider>();
         _meshCollider = GetComponent<MeshCollider>();
+
+        for (int i = 0; i < 22; i++)
+            _coins[i] = fullAnimation.transform.GetChild(i).gameObject;
     }
 
     private void Update() => Shake();
