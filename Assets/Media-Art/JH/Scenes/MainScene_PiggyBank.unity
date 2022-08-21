@@ -1627,6 +1627,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1671008647756821139, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1927
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671008648999862334, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1043
+      objectReference: {fileID: 0}
     - target: {fileID: 1725823981543279096, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
         type: 3}
       propertyPath: m_Layer
@@ -1734,23 +1744,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5804852706475409803, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
         type: 3}
+      propertyPath: m_Size.x
+      value: 0.103601106
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804852706475409803, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
+        type: 3}
       propertyPath: m_Size.y
-      value: 0.0986709
+      value: 0.09002114
       objectReference: {fileID: 0}
     - target: {fileID: 5804852706475409803, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
         type: 3}
       propertyPath: m_Size.z
-      value: 0.12810269
+      value: 0.10215391
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804852706475409803, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.0024772128
       objectReference: {fileID: 0}
     - target: {fileID: 5804852706475409803, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
         type: 3}
       propertyPath: m_Center.y
-      value: 0.00017033772
+      value: -0.00055047055
       objectReference: {fileID: 0}
     - target: {fileID: 5804852706475409803, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
         type: 3}
       propertyPath: m_Center.z
-      value: 0.011335389
+      value: 0.030796966
       objectReference: {fileID: 0}
     - target: {fileID: 5804852706475409803, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
         type: 3}

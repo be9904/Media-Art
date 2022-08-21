@@ -53,8 +53,8 @@ public class PiggyBank : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider>();
         _meshCollider = GetComponent<MeshCollider>();
 
-        for (int i = 0; i < 22; i++)
-            _coins[i] = fullAnimation.transform.GetChild(i).gameObject;
+        /*for (int i = 0; i < 22; i++)
+            _coins[i] = fullAnimation.transform.GetChild(i).gameObject;*/
     }
 
     private void Update() => Shake();
@@ -70,8 +70,9 @@ public class PiggyBank : MonoBehaviour
 
             if (CoinCapacity > MaxCoinCapacity * 0.35f && CoinCapacity <= MaxCoinCapacity * 0.7f)
             {
-                input.VibrateController(.3f, .2f, .1f, BNG.ControllerHand.Left);
-                input.VibrateController(.3f, .2f, .1f, BNG.ControllerHand.Right);
+                /*input.VibrateController(.3f, .2f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .2f, .1f, BNG.ControllerHand.Right);*/
+                EnableHaptics();
                 if (currentTrack != 1)
                 {
                     SfxAudioSource.clip = SfxAudioClips[1];
@@ -82,8 +83,9 @@ public class PiggyBank : MonoBehaviour
             }
             else if (CoinCapacity > MaxCoinCapacity * 0.7f && CoinCapacity <= MaxCoinCapacity * 0.9f)
             {
-                input.VibrateController(.3f, .3f, .1f, BNG.ControllerHand.Left);
-                input.VibrateController(.3f, .3f, .1f, BNG.ControllerHand.Right);
+                /*input.VibrateController(.3f, .3f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .3f, .1f, BNG.ControllerHand.Right);*/
+                EnableHaptics();
                 if (currentTrack != 2)
                 {
                     SfxAudioSource.clip = SfxAudioClips[2];
@@ -94,8 +96,9 @@ public class PiggyBank : MonoBehaviour
             }
             else if (CoinCapacity > MaxCoinCapacity * 0.9f)
             {
-                input.VibrateController(.3f, .4f, .1f, BNG.ControllerHand.Left);
-                input.VibrateController(.3f, .4f, .1f, BNG.ControllerHand.Right);
+                /*input.VibrateController(.3f, .4f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .4f, .1f, BNG.ControllerHand.Right);*/
+                EnableHaptics();
                 if (currentTrack != 3)
                 {
                     SfxAudioSource.clip = SfxAudioClips[3];
@@ -107,14 +110,24 @@ public class PiggyBank : MonoBehaviour
             }
             else
             {
-                input.VibrateController(.3f, .1f, .1f, BNG.ControllerHand.Left);
-                input.VibrateController(.3f, .1f, .1f, BNG.ControllerHand.Right);
+                /*input.VibrateController(.3f, .1f, .1f, BNG.ControllerHand.Left);
+                input.VibrateController(.3f, .1f, .1f, BNG.ControllerHand.Right);*/
+                EnableHaptics();
             }
         }
         else if (_rigidbody.velocity.sqrMagnitude > 0 && _grabbable.BeingHeld)
             SfxAudioSource.volume = _rigidbody.velocity.sqrMagnitude / shakeThreshold;
         else
             SfxAudioSource.volume = 0;
+    }
+
+    void EnableHaptics()
+    {
+        float amplitude = Mathf.Clamp((float)CoinCapacity/(float)MaxCoinCapacity * 0.5f, 0, .5f);
+        Debug.Log("Amplitude before Clamp: " + (float)CoinCapacity/(float)MaxCoinCapacity * 0.5f);
+        Debug.Log("Amplitude: " + amplitude);
+        input.VibrateController(.3f, amplitude, .1f, BNG.ControllerHand.Left);
+        input.VibrateController(.3f, amplitude, .1f, BNG.ControllerHand.Right);
     }
 
     public void PlayAnimation(int id)
