@@ -1832,11 +1832,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5804852706475409807, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
-        type: 3}
-      propertyPath: shakeThreshold
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 5804852706475409906, guid: 7b5b5a79655992d4c86ecb67aaea74c6,
         type: 3}
       propertyPath: m_Name

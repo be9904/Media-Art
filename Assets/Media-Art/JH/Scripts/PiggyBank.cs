@@ -18,6 +18,7 @@ public class PiggyBank : MonoBehaviour
     private MeshCollider _meshCollider;
 
     public GameObject emptyAnimation;
+    public GameObject partiallyFullAnimation;
     public GameObject fullAnimation;
     public AudioClip breakEffect;
     private GameObject[] _coins;
@@ -61,7 +62,7 @@ public class PiggyBank : MonoBehaviour
 
     void Shake()
     {
-        if (_rigidbody.velocity.sqrMagnitude > shakeThreshold && _grabbable.BeingHeld)
+        if (_rigidbody.velocity.sqrMagnitude > shakeThreshold && _grabbable.BeingHeldWithTwoHands)
         {
             timer += Time.deltaTime;
             CoinCapacity = (int)(timer * 0.75f);
@@ -116,7 +117,10 @@ public class PiggyBank : MonoBehaviour
             }
         }
         else if (_rigidbody.velocity.sqrMagnitude > 0 && _grabbable.BeingHeld)
-            SfxAudioSource.volume = _rigidbody.velocity.sqrMagnitude / shakeThreshold;
+        {
+            SfxAudioSource.volume = 1;
+            Debug.Log("Just Shaking");
+        }
         else
             SfxAudioSource.volume = 0;
     }
@@ -124,8 +128,6 @@ public class PiggyBank : MonoBehaviour
     void EnableHaptics()
     {
         float amplitude = Mathf.Clamp((float)CoinCapacity/(float)MaxCoinCapacity * 0.5f, 0, .5f);
-        Debug.Log("Amplitude before Clamp: " + (float)CoinCapacity/(float)MaxCoinCapacity * 0.5f);
-        Debug.Log("Amplitude: " + amplitude);
         input.VibrateController(.3f, amplitude, .1f, BNG.ControllerHand.Left);
         input.VibrateController(.3f, amplitude, .1f, BNG.ControllerHand.Right);
     }
@@ -144,6 +146,8 @@ public class PiggyBank : MonoBehaviour
             emptyAnimation.SetActive(true);
         else if (id == 1) // full
             fullAnimation.SetActive(true);
+        else // partially full
+            partiallyFullAnimation.SetActive(true);
 
         _boxCollider.enabled = false;
         _meshCollider.enabled = false;

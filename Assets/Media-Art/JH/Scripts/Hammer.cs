@@ -23,8 +23,10 @@ public class Hammer : MonoBehaviour
         {
             if (_rigidbody.velocity.sqrMagnitude > minHitPower)
             {
-                if(pb.CoinCapacity < pb.MaxCoinCapacity)
+                if(pb.CoinCapacity == 0)
                     pb.PlayAnimation(0);
+                else if(pb.CoinCapacity < pb.MaxCoinCapacity)
+                    pb.PlayAnimation(2);
                 else if(pb.CoinCapacity >= pb.MaxCoinCapacity)
                     pb.PlayAnimation(1);
             }
