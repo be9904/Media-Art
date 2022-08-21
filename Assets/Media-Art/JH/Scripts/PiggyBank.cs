@@ -157,10 +157,7 @@ public class PiggyBank : MonoBehaviour
 
     IEnumerator Reset()
     {
-        if(isFull)
-            yield return new WaitForSeconds(20f);
-        else
-            yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(10f);
         
         _meshRenderer.enabled = true;
         
