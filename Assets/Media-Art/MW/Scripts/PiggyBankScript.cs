@@ -11,7 +11,7 @@ public class PiggyBankScript : MonoBehaviour
     private bool isScissorsAnimated;
     private bool isFirstCut = true;
 
-    public int slicing = 100; //inspector에서 확인하기 위해 우선 public
+    public int slicing = 10000; //inspector에서 확인하기 위해 우선 public
 
     private void Awake()
     {
@@ -29,7 +29,6 @@ public class PiggyBankScript : MonoBehaviour
             //Action
             isFirstCut = false;
             CloudInstantiate.instance.WhenCut(transform.position);
-            EnvironmnetManager.instance.MatChange();
         }
     }
     private void OnTriggerEnter(Collider other)
