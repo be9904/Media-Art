@@ -224,8 +224,7 @@ Shader "Disintegration_HLSL"{
             #pragma multi_compile _ _SHADOWS_SOFT
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             
-            float4 frag (g2f i) : SV_Tar
-            
+            float4 frag (g2f i) : SV_Target            
             {
                 // UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 

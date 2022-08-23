@@ -14,7 +14,7 @@ public class Scissors : MonoBehaviour
 
     private Grabber _currentGrabber;
 
-    private Animator _animator;
+    public Animator _animator;
     private void Awake() => _inputBridge = InputBridge.Instance;
     
     // Start is called before the first frame update
@@ -22,10 +22,8 @@ public class Scissors : MonoBehaviour
     {
         if (triggerSensitivity == 0)
             triggerSensitivity = .8f;
-        
-        _grabbable = GetComponent<Grabbable>();
 
-        _animator = GetComponent<Animator>();
+        _grabbable = GetComponent<Grabbable>();
     }
 
     // Update is called once per frame
