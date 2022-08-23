@@ -11,7 +11,7 @@ public class PiggyBankScript : MonoBehaviour
     private bool isScissorsAnimated;
     private bool isFirstCut = true;
 
-    public int slicing = 100; //inspector¿¡¼­ È®ÀÎÇÏ±â À§ÇØ ¿ì¼± public
+    public int slicing = 100; //inspectorï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ì¼± public
 
     private void Awake()
     {
@@ -35,11 +35,18 @@ public class PiggyBankScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Trigger On");
+#if false
         if (isScissorsAnimated)
         {
             slicing -= 1;
 
         }
+#endif
+        
+#if true
+        if (other.gameObject.CompareTag("Scissors"))
+            slicing -= 1;
+#endif
     }
     /*
     public bool CheckIsCut()
