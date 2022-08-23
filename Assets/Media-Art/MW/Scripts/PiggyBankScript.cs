@@ -11,7 +11,7 @@ public class PiggyBankScript : MonoBehaviour
     private bool isScissorsAnimated;
     private bool isFirstCut = true;
 
-    public int slicing = 100; //inspector���� Ȯ���ϱ� ���� �켱 public
+    public int slicing = 1000; //inspector���� Ȯ���ϱ� ���� �켱 public
 
     private void Awake()
     {

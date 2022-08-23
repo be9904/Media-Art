@@ -18,6 +18,8 @@ public class CloudInstantiate : MonoBehaviour
         {
             arrayCloud[i]= Instantiate(CloudPrefab, positionOfPiggyBank, Quaternion.Euler(Random.Range(-180,180), Random.Range(-180, 180),Random.Range(-180, 180))) as GameObject;
             arrayCloud[i].transform.parent = transform;
+            arrayCloud[i].SetActive(true);
+            Debug.Log("Cloud " + i.ToString() + " instantiated");
         }
     }
 }

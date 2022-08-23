@@ -11,7 +11,7 @@ public class Clouds : MonoBehaviour
     private float xpos;
     private float ypos;
     private float zpos;
-    private float targetTime;
+    private float targetTime=4;
     private bool isMoveOn = false;
     private bool isMoved = false;
     
@@ -24,7 +24,8 @@ public class Clouds : MonoBehaviour
     private Color color;
     private Vector3 colorVector;
     private Vector3 initColorVector;
-    public float waitingTime = 3;
+    private Vector3 destColorVector;
+    private float waitingTime = 10;
 
     
     private void OnEnable()
@@ -46,7 +47,9 @@ public class Clouds : MonoBehaviour
 
         color = gameObject.GetComponent<Renderer>().material.GetColor("_CloudColor");
         colorVector = new Vector3(color.r, color.g, color.b);
+        Debug.Log("initColorVec: " + colorVector.ToString());
         initColorVector = colorVector;
+        destColorVector = new Vector3(1, 0.8431f, 0);
     }
 
     // Update is called once per frame
@@ -60,19 +63,23 @@ public class Clouds : MonoBehaviour
         if ((destination - transform.position).sqrMagnitude < 0.01)
         {
             isMoveOn = false;
+            Debug.Log("!isMoveOn");
             isMoved = true;
         }
         if (isMoved&&!isSecondMoved)
         {
-            
+            //Debug.Log("if (isMoved&&!isSecondMoved)");   
             timer += Time.deltaTime;
 
             if (timer > waitingTime)
             {
+                Debug.Log("Timer Entered");   
+
                 EnvironmnetManager.instance.isReturn = true;
-                transform.position = Vector3.MoveTowards(destination, piggyBank.transform.position, destination.sqrMagnitude / targetTime);
-                colorVector = Vector3.MoveTowards(initColorVector, new Vector3(1, 0.8431f,0),0.1f);
-                isSecondMoved = true;
+                transform.position = Vector3.MoveTowards(destination, initialPosition, destination.sqrMagnitude / targetTime);
+                colorVector = Vector3.MoveTowards(initColorVector, destColorVector,0.1f);
+                //isSecondMoved = true;
+                Debug.Log(gameObject.GetComponent<Renderer>().material.GetColor("_CloudColor"));
             }           
         }
     }

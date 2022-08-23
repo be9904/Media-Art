@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4157188590364668660}
   - component: {fileID: 4157188590364668657}
   - component: {fileID: 4157188590364668662}
-  - component: {fileID: 4157188590364668663}
   - component: {fileID: 393929851421243222}
   m_Layer: 0
   m_Name: CloudSphere (1)
@@ -19,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4157188590364668660
 Transform:
   m_ObjectHideFlags: 0
@@ -27,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4157188590364668661}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.47, y: 2.89, z: 1.9}
   m_LocalScale: {x: 2.664842, y: 2.664842, z: 2.664842}
   m_ConstrainProportionsScale: 0
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4157188590364668663
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4157188590364668661}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &393929851421243222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,4 +97,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   piggyBank: {fileID: 0}
-  waitingTime: 3
