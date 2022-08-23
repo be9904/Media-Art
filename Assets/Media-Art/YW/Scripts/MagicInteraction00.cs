@@ -5,11 +5,13 @@ using UnityEngine;
 public class MagicInteraction00 : MonoBehaviour
 {
     private Component XRGrabInteractable;
+    public GameObject lasor;
     void Start()
     {
         if(XRGrabInteractable == null){
             //XRGrabInteractable = gameObject.GetComponent<XRGrabInteractable>();
         }
+        lasor.SetActive(false);
     }
     public void FirstHover()
     {
@@ -37,20 +39,19 @@ public class MagicInteraction00 : MonoBehaviour
     }
     public void SelectEntered()
     {
-        Debug.Log("Select Entered");
-        //XRGrabInteractable
+        GameManager.instance.StickHold();
     }
     public void SelectExited()
     {
-        Debug.Log("Select Exited");
+        GameManager.instance.StickRelease();
     }
     public void Activated()
     {
-        Debug.Log("Activated");
+        lasor.SetActive(true);
     }
     public void Deactivated()
     {
-        Debug.Log("Deactivated");
+        lasor.SetActive(false);
     }
 
 }
