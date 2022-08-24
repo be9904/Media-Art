@@ -6,12 +6,15 @@ public class MagicInteraction00 : MonoBehaviour
 {
     private Component XRGrabInteractable;
     public GameObject lasor;
+    public AudioSource audio_lasor;
+
     void Start()
     {
         if(XRGrabInteractable == null){
             //XRGrabInteractable = gameObject.GetComponent<XRGrabInteractable>();
         }
         lasor.SetActive(false);
+        audio_lasor.Stop();
     }
     public void FirstHover()
     {
@@ -48,10 +51,12 @@ public class MagicInteraction00 : MonoBehaviour
     public void Activated()
     {
         lasor.SetActive(true);
+        audio_lasor.Play();
     }
     public void Deactivated()
     {
         lasor.SetActive(false);
+        audio_lasor.Stop();
     }
 
 }
